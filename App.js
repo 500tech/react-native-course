@@ -1,21 +1,43 @@
 import React, { Component } from 'react';
 import {
   StyleSheet,
-  Text,
-  View
+  View,
+  Button,
+  Image,
+  ScrollView,
+  Text
 } from 'react-native';
 
+import { NAMES_URL, AVATARS_URL } from './constants';
+
 export default class App extends Component<{}> {
+  state = {
+    users: []
+  };
+
+  fetchUsers = () => {
+    fetch(NAMES_URL).then(response => response.json()).then((data) => this.setState({ users: data }));
+  };
+
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
+        <Button title="Fetch users"
+                onPress={ this.fetchUsers }/>
 
-        <Text style={styles.instructions}>
-          To get started, edit App.js
-        </Text>
+        <ScrollView style={{ width: '100%' }}>
+          {
+            this.state.users.map(user => (
+              <View key={ user.name }
+                    style={{ padding: 10, flexDirection: 'row', justifyContent: 'space-between' }}>
+                <Text>{ user.name }</Text>
+
+                <Image source={{ uri: AVATARS_URL + user.name }}
+                       style={{ width: 50, height: 50 }}/>
+              </View>
+            ))
+          }
+        </ScrollView>
       </View>
     );
   }
@@ -23,6 +45,7 @@ export default class App extends Component<{}> {
 
 const styles = StyleSheet.create({
   container: {
+    paddingTop: 20,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
