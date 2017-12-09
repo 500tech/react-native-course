@@ -1,21 +1,32 @@
 import React, { Component } from 'react';
 import {
   StyleSheet,
-  Text,
-  View
+  View,
+  Button,
+  Modal,
+  StatusBar
 } from 'react-native';
 
 export default class App extends Component<{}> {
+  state = {
+    modal: false
+  };
+
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
+        <StatusBar barStyle={ this.state.modal ? 'light-content' : 'dark-content' }/>
 
-        <Text style={styles.instructions}>
-          To get started, edit App.js
-        </Text>
+        <Button title="Open modal"
+                onPress={ () => this.setState({ modal: true }) }/>
+
+        <Modal visible={ this.state.modal }
+               animationType="slide">
+          <View style={ [styles.container, { backgroundColor: 'black' }] }>
+            <Button title="Close modal"
+                    onPress={ () => this.setState({ modal: false }) }/>
+          </View>
+        </Modal>
       </View>
     );
   }
