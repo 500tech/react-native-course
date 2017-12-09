@@ -16,3 +16,7 @@ export const LIST = [
   'Apple',
   'El-Al'
 ];
+
+export const POSTS_URL = 'https://jsonplaceholder.typicode.com/posts';
+export const NAMES_URL = 'https://uinames.com/api/?amount=25';
+export const AVATARS_URL = 'https://api.adorable.io/avatars/150/';
