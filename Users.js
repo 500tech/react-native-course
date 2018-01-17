@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   View,
-  Button,
   Image,
   ScrollView,
-  Text
+  Text,
+  TouchableOpacity
 } from 'react-native';
 
 import { NAMES_URL, AVATARS_URL } from './constants';
@@ -20,15 +20,22 @@ export default class Users extends Component<{}> {
   };
 
   render() {
+    console.log('this.state.users', this.state.users);
     return (
       <View style={styles.container}>
-        <Button title="Fetch users"
-                onPress={ this.fetchUsers }/>
+        {
+          this.state.users.length === 0 && (
+            <TouchableOpacity style={styles.button}
+                              onPress={this.fetchUsers}>
+              <Text style={styles.label}>FETCH USERS</Text>
+            </TouchableOpacity>
+          )
+        }
 
         <ScrollView style={{ width: '100%' }}>
           {
             this.state.users.map(user => (
-              <View key={ user.name }
+              <View key={ user.name + user.surname }
                     style={{ padding: 10, flexDirection: 'row', justifyContent: 'space-between' }}>
                 <Text>{ user.name }</Text>
 
@@ -45,7 +52,7 @@ export default class Users extends Component<{}> {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 20,
+    paddingTop: 50,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -61,4 +68,15 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
+  button: {
+    backgroundColor: '#303546',
+    paddingTop: 5,
+    paddingBottom: 5,
+    paddingLeft: 10,
+    paddingRight: 10,
+    borderRadius: 5
+  },
+  label: {
+    color: 'white'
+  }
 });
